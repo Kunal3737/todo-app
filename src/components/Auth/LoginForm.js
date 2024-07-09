@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { AuthContext } from "./AuthContext";
 import Label from "../UI/Label";
 import Input from "../UI/Input";
@@ -9,10 +9,13 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    loginUser(username, password);
-  };
+  const handleLogin = useCallback(
+    (e) => {
+      e.preventDefault();
+      loginUser(username, password);
+    },
+    [loginUser, username, password]
+  );
 
   return (
     <div className="max-w-sm mx-auto mt-10">
