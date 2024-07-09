@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 const TodoItem = ({ task, deleteTask, toggleTaskStatus, editTask }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,17 +10,20 @@ const TodoItem = ({ task, deleteTask, toggleTaskStatus, editTask }) => {
     setEditedTask(e.target.value);
   };
 
-  const handleEditSave = (e) => {
-    e.preventDefault();
-    editTask(task.id, editedTask, image);
-    setIsEditing(false);
-  };
+  const handleEditSave = useCallback(
+    (e) => {
+      e.preventDefault();
+      editTask(task.id, editedTask, image);
+      setIsEditing(false);
+    },
+    [editTask, task.id, editedTask, image]
+  );
 
-  const handleEditCancel = () => {
+  const handleEditCancel = useCallback(() => {
     setEditedTask(task.task);
     setImage(task.image || null);
     setIsEditing(false);
-  };
+  }, [task.task, task.image]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

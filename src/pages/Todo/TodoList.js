@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import TodoItem from "./TodoItem";
 import AddTodoForm from "./AddTodoForm";
 import TabButton from "../../components/UI/TabButton";
@@ -43,12 +43,14 @@ const TodoList = () => {
     );
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === "all") return true;
-    if (filter === "completed") return task.completed;
-    if (filter === "incomplete") return !task.completed;
-    return true;
-  });
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => {
+      if (filter === "all") return true;
+      if (filter === "completed") return task.completed;
+      if (filter === "incomplete") return !task.completed;
+      return true;
+    });
+  }, [tasks, filter]);
 
   return (
     <div className="max-w-lg mx-auto mt-8">
