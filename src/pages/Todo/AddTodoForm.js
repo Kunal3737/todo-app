@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Input from "../../components/UI/Input";
 import Button from "../../components/UI/Button";
 
@@ -6,14 +6,17 @@ const AddTodoForm = ({ addTask }) => {
   const [task, setTask] = useState("");
   const [image, setImage] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (task.trim()) {
-      addTask(task, image);
-      setTask("");
-      setImage(null);
-    }
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (task.trim()) {
+        addTask(task, image);
+        setTask("");
+        setImage(null);
+      }
+    },
+    [addTask, image, task]
+  );
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
