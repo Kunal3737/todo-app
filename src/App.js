@@ -1,6 +1,6 @@
 import React from "react";
-import AuthProvider from "./components/Auth/AuthProvider";
 import Main from "./pages";
+import AuthProvider from "./components/Auth/AuthContext";
 
 const App = () => {
   return (
